@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GlobalExceptionHandling.Controllers
@@ -10,6 +8,7 @@ namespace GlobalExceptionHandling.Controllers
     {
         public IActionResult Index()
         {
+            throw new Exception("Something bad happened.");
             return View();
         }
 
@@ -29,6 +28,22 @@ namespace GlobalExceptionHandling.Controllers
 
         public IActionResult Error()
         {
+            var exceptionFeature = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+
+            if (exceptionFeature != null)
+            {
+                string routeWhereExceptionOccurred = exceptionFeature.Path;
+
+                Exception exceptionThatOccurred = exceptionFeature.Error;
+
+
+                //throw exceptionThatOccurred;
+                // TODO: Do something with the exception
+                // Log it with Serilog?
+                // Send an e-mail, text, fax, or carrier pidgeon?  Maybe all of the above?
+                // Whatever you do, be careful to catch any exceptions, otherwise you'll end up in an endless loop of throwing exceptions.
+            }
+
             return View();
         }
     }

@@ -44,7 +44,7 @@ namespace GlobalExceptionHandling
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Home/Error"); // Adding comment so this sticks out in the GitHub commit.  Make sure you have this line.
             }
 
             app.UseStaticFiles();
